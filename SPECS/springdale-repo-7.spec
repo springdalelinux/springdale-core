@@ -3,7 +3,7 @@
 Summary: yum %{repo} repository configuration file
 Name: springdale-%{repo}
 Version: 7
-Release: 1.sdl7.1
+Release: 1.sdl7.2
 Group: System Environment/Base 
 License: GPL
 BuildRoot: %{_tmppath}/%{name}-root
@@ -73,7 +73,7 @@ echo "other %{repo}"
 
 %if %{?base_repo:1}0
 cat > $RPM_BUILD_ROOT/etc/yum.repos.d/springdale-%{version}-%{repo}.repo <<ENDREPO
-[Springdale_%{version}_%{repo}%{base}]
+[core]
 name=Springdale %{repo} Base \$releasever - \$basearch
 mirrorlist=%{base_repo}/mirrorlist
 #baseurl=%{base_repo}
@@ -85,7 +85,7 @@ ENDREPO
 %if %{?updates_repo:1}0
 cat >> $RPM_BUILD_ROOT/etc/yum.repos.d/springdale-%{version}-%{repo}.repo <<ENDREPO
 
-[Springdale_%{version}_%{repo}_Updates]
+[updates]
 name=Springdale %{repo} Updates \$releasever - \$basearch
 mirrorlist=%{updates_repo}/mirrorlist
 #baseurl=%{updates_repo}
@@ -96,7 +96,7 @@ ENDREPO
 
 %if %{?debuginfo_repo:1}0
 cat > $RPM_BUILD_ROOT/etc/yum.repos.d/springdale-%{version}-%{repo}-debug.repo <<ENDREPO
-[Springdale_%{version}_%{repo}_Base-debuginfo]
+[core-debuginfo]
 name=Springdale %{repo} Base \$releasever Debuginfo - \$basearch
 mirrorlist=%{debuginfo_repo}/mirrorlist
 #baseurl=%{debuginfo_repo}
@@ -109,7 +109,7 @@ ENDREPO
 %if %{?debuginfoupdates_repo:1}0
 cat >> $RPM_BUILD_ROOT/etc/yum.repos.d/springdale-%{version}-%{repo}-debug.repo <<ENDREPO
 
-[Springdale_%{version}_%{repo}_Updates-debuginfo]
+[updates-debuginfo]
 name=Springdale %{repo} Updates \$releasever Debuginfo - \$basearch
 mirrorlist=%{debuginfoupdates_repo}/mirrorlist
 #baseurl=%{debuginfoupdates_repo}
@@ -121,7 +121,7 @@ ENDREPO
 
 %if %{?source_repo:1}0
 cat > $RPM_BUILD_ROOT/etc/yum.repos.d/springdale-%{version}-%{repo}-source.repo <<ENDREPO
-[Springdale_%{version}_%{repo}_Base_Source]
+[source]
 name=Springdale %{repo} Base \$releasever SRPMS - \$basearch
 mirrorlist=%{source_repo}/mirrorlist
 #baseurl=%{source_repo}
@@ -134,7 +134,7 @@ ENDREPO
 %if %{?sourceupdates_repo:1}0
 cat >> $RPM_BUILD_ROOT/etc/yum.repos.d/springdale-%{version}-%{repo}-source.repo <<ENDREPO
 
-[Springdale_%{version}_%{repo}_Updates_Source]
+[updates-source]
 name=Springdale %{repo} Updates \$releasever SRPMS - \$basearch
 mirrorlist=%{sourceupdates_repo}/mirrorlist
 #baseurl=%{sourceupdates_repo}
@@ -152,6 +152,9 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) /etc/yum.repos.d/springdale*
 
 %changelog
+* Wed Jul 02 2014 Josko Plazonic <plazonic@princeton.edu>
+- rename repos for easier updates handling
+
 * Fri Jun 27 2014 Josko Plazonic <plazonic@princeton.edu>
 - initial version for sdl7
 
